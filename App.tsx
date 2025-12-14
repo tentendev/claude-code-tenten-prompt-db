@@ -1,53 +1,130 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { PROMPTS, PILLAR_DESCRIPTIONS, FEATURED_TAGS } from './constants';
+import React, { useState, useMemo } from 'react';
+import { PROMPTS } from './constants';
 import { Prompt, PromptCategory } from './types';
+import { useLanguage } from './contexts/LanguageContext';
 import PromptCard from './components/PromptCard';
 import Modal from './components/Modal';
-import { Search, Sparkles, Filter, Command, Github } from 'lucide-react';
+import LanguageToggle from './components/LanguageToggle';
+import { Search, Sparkles, Filter } from 'lucide-react';
 
 // DeepMind-inspired Header
-const Header = () => (
-  <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
-          T
+const Header = () => {
+  const { t } = useLanguage();
+
+  return (
+    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
+            T
+          </div>
+          <div className="flex flex-col">
+            <h1 className="text-lg font-bold text-slate-900 leading-none">{t.ui.header.title}</h1>
+            <span className="text-[10px] font-medium text-slate-500 tracking-widest uppercase">{t.ui.header.subtitle}</span>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <h1 className="text-lg font-bold text-slate-900 leading-none">CEO Prompts</h1>
-          <span className="text-[10px] font-medium text-slate-500 tracking-widest uppercase">Tenten.co Intelligence</span>
+        <div className="flex items-center space-x-4">
+          <a href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors hidden sm:block">{t.ui.header.about}</a>
+          <a href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors hidden sm:block">{t.ui.header.contribute}</a>
+          <LanguageToggle />
+          <button className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-md">
+            {t.ui.header.openApp}
+          </button>
         </div>
       </div>
-      <div className="flex items-center space-x-4">
-        <a href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors hidden sm:block">About</a>
-        <a href="#" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors hidden sm:block">Contribute</a>
-        <button className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-md">
-          Open App
-        </button>
-      </div>
-    </div>
-  </header>
-);
+    </header>
+  );
+};
+
+// Featured tags - bilingual
+const FEATURED_TAGS_MAP: Record<string, { en: string; 'zh-TW': string }> = {
+  'Strategy': { en: 'Strategy', 'zh-TW': '策略' },
+  'HubSpot': { en: 'HubSpot', 'zh-TW': 'HubSpot' },
+  'AI Agents': { en: 'AI Agents', 'zh-TW': 'AI 代理' },
+  'Sales': { en: 'Sales', 'zh-TW': '銷售' },
+  'Management': { en: 'Management', 'zh-TW': '管理' },
+  'Web Dev': { en: 'Web Dev', 'zh-TW': '網頁開發' },
+  'Personal Brand': { en: 'Personal Brand', 'zh-TW': '個人品牌' },
+};
+
+const FEATURED_TAG_KEYS = Object.keys(FEATURED_TAGS_MAP);
 
 const App: React.FC = () => {
+  const { language, t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<PromptCategory | 'All'>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
   const [activeTag, setActiveTag] = useState<string | null>(null);
 
+  // Get localized prompts
+  const localizedPrompts = useMemo(() => {
+    return PROMPTS.map(prompt => {
+      const translation = t.prompts[prompt.id];
+      if (translation) {
+        return {
+          ...prompt,
+          title: translation.title,
+          description: translation.description,
+          content: translation.content,
+          tags: translation.tags,
+        };
+      }
+      return prompt;
+    });
+  }, [t]);
+
+  // Get localized category name
+  const getCategoryLabel = (category: PromptCategory | 'All'): string => {
+    if (category === 'All') return t.ui.categories.all;
+    const categoryMap: Record<PromptCategory, string> = {
+      [PromptCategory.STRATEGY]: t.ui.categories.strategy,
+      [PromptCategory.GROWTH]: t.ui.categories.growth,
+      [PromptCategory.OPERATIONS]: t.ui.categories.operations,
+      [PromptCategory.PRODUCT]: t.ui.categories.product,
+      [PromptCategory.BRAND]: t.ui.categories.brand,
+    };
+    return categoryMap[category] || category;
+  };
+
+  // Get localized pillar description
+  const getPillarDescription = (category: PromptCategory): string => {
+    const descMap: Record<PromptCategory, string> = {
+      [PromptCategory.STRATEGY]: t.ui.pillarDescriptions.strategy,
+      [PromptCategory.GROWTH]: t.ui.pillarDescriptions.growth,
+      [PromptCategory.OPERATIONS]: t.ui.pillarDescriptions.operations,
+      [PromptCategory.PRODUCT]: t.ui.pillarDescriptions.product,
+      [PromptCategory.BRAND]: t.ui.pillarDescriptions.brand,
+    };
+    return descMap[category] || '';
+  };
+
+  // Get localized featured tags
+  const getLocalizedTag = (tagKey: string): string => {
+    return FEATURED_TAGS_MAP[tagKey]?.[language] || tagKey;
+  };
+
   // Filter Logic
   const filteredPrompts = useMemo(() => {
-    return PROMPTS.filter(prompt => {
+    return localizedPrompts.filter(prompt => {
       const matchesCategory = selectedCategory === 'All' || prompt.category === selectedCategory;
-      const matchesSearch = 
-        prompt.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      const matchesSearch =
+        prompt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         prompt.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         prompt.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      const matchesTag = activeTag ? prompt.tags.includes(activeTag) : true;
+
+      // Match active tag (check both languages)
+      let matchesTag = true;
+      if (activeTag) {
+        const localizedActiveTag = getLocalizedTag(activeTag);
+        matchesTag = prompt.tags.some(tag =>
+          tag.toLowerCase() === activeTag.toLowerCase() ||
+          tag.toLowerCase() === localizedActiveTag.toLowerCase()
+        );
+      }
 
       return matchesCategory && matchesSearch && matchesTag;
     });
-  }, [selectedCategory, searchQuery, activeTag]);
+  }, [selectedCategory, searchQuery, activeTag, localizedPrompts, language]);
 
   // Statistics for Pills
   const categoryStats = useMemo(() => {
@@ -63,25 +140,24 @@ const App: React.FC = () => {
       <Header />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        
+
         {/* Hero Section */}
         <div className="mb-16 text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center space-x-2 bg-blue-50 border border-blue-100 rounded-full px-3 py-1 mb-6">
             <Sparkles size={14} className="text-blue-500" />
-            <span className="text-xs font-semibold text-blue-700 tracking-wide uppercase">AI-First Management System</span>
+            <span className="text-xs font-semibold text-blue-700 tracking-wide uppercase">{t.ui.hero.badge}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
-            Scale your agency with <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Generative Intelligence</span>
+            {t.ui.hero.titlePart1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">{t.ui.hero.titleHighlight}</span>
           </h2>
           <p className="text-lg text-slate-600 leading-relaxed">
-            A curated collection of {PROMPTS.length}+ strategic prompts designed for the CEO of Tenten.co. 
-            Covering strategy, growth, operations, and product innovation.
+            {t.ui.hero.description.replace('{count}', String(PROMPTS.length))}
           </p>
         </div>
 
         {/* Search & Filters */}
         <div className="mb-12 space-y-8 sticky top-20 z-30 bg-slate-50/95 py-4 backdrop-blur-sm -mx-4 px-4 sm:mx-0 sm:px-0">
-          
+
           {/* Search Bar */}
           <div className="relative max-w-2xl mx-auto group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -89,7 +165,7 @@ const App: React.FC = () => {
             </div>
             <input
               type="text"
-              placeholder="Search specifically (e.g., 'Cold Email', 'HubSpot', 'Strategy')..."
+              placeholder={t.ui.search.placeholder}
               className="block w-full pl-11 pr-4 py-4 bg-white border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all shadow-sm group-hover:shadow-md"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -109,7 +185,7 @@ const App: React.FC = () => {
                   : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
               }`}
             >
-              All Prompts <span className="ml-1 opacity-60 text-xs">{categoryStats['All']}</span>
+              {t.ui.categories.all} <span className="ml-1 opacity-60 text-xs">{categoryStats['All']}</span>
             </button>
             {Object.values(PromptCategory).map((category) => (
               <button
@@ -121,22 +197,22 @@ const App: React.FC = () => {
                     : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
                 }`}
               >
-                {category} <span className="ml-1 opacity-60 text-xs">{categoryStats[category]}</span>
+                {getCategoryLabel(category)} <span className="ml-1 opacity-60 text-xs">{categoryStats[category]}</span>
               </button>
             ))}
           </div>
-          
-          {/* Quick Tags (Optional) */}
+
+          {/* Quick Tags */}
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-slate-500">
-            <span className="flex items-center"><Filter size={14} className="mr-2"/> Popular:</span>
-            {FEATURED_TAGS.map(tag => (
-               <button 
-                 key={tag}
-                 onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                 className={`hover:text-blue-600 transition-colors ${activeTag === tag ? 'text-blue-600 font-bold underline' : ''}`}
-               >
-                 #{tag}
-               </button>
+            <span className="flex items-center"><Filter size={14} className="mr-2"/> {t.ui.search.popular}</span>
+            {FEATURED_TAG_KEYS.map(tagKey => (
+              <button
+                key={tagKey}
+                onClick={() => setActiveTag(activeTag === tagKey ? null : tagKey)}
+                className={`hover:text-blue-600 transition-colors ${activeTag === tagKey ? 'text-blue-600 font-bold underline' : ''}`}
+              >
+                #{getLocalizedTag(tagKey)}
+              </button>
             ))}
           </div>
         </div>
@@ -144,10 +220,10 @@ const App: React.FC = () => {
         {/* Category Description Banner */}
         {selectedCategory !== 'All' && (
           <div className="mb-8 p-6 bg-white border-l-4 border-blue-500 rounded-r-xl shadow-sm animate-in fade-in slide-in-from-left-4">
-             <h3 className="text-lg font-bold text-slate-900 mb-1">{selectedCategory}</h3>
-             <p className="text-slate-600">
-               {PILLAR_DESCRIPTIONS[selectedCategory as PromptCategory]}
-             </p>
+            <h3 className="text-lg font-bold text-slate-900 mb-1">{getCategoryLabel(selectedCategory)}</h3>
+            <p className="text-slate-600">
+              {getPillarDescription(selectedCategory as PromptCategory)}
+            </p>
           </div>
         )}
 
@@ -168,13 +244,13 @@ const App: React.FC = () => {
             <div className="inline-block p-4 rounded-full bg-slate-100 mb-4">
               <Search size={32} className="text-slate-400" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">No prompts found</h3>
-            <p className="text-slate-500">Try adjusting your search or category filters.</p>
-            <button 
+            <h3 className="text-xl font-bold text-slate-900 mb-2">{t.ui.empty.title}</h3>
+            <p className="text-slate-500">{t.ui.empty.description}</p>
+            <button
               onClick={() => { setSearchQuery(''); setSelectedCategory('All'); setActiveTag(null); }}
               className="mt-6 text-blue-600 font-medium hover:underline"
             >
-              Clear all filters
+              {t.ui.empty.clearFilters}
             </button>
           </div>
         )}
@@ -185,7 +261,7 @@ const App: React.FC = () => {
       <footer className="bg-white border-t border-slate-200 py-12 mt-12">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-400 text-sm">
-            Designed for Tenten.co • Inspired by Google DeepMind & Material 3
+            {t.ui.footer.text}
           </p>
         </div>
       </footer>

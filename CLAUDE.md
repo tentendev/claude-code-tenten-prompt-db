@@ -40,16 +40,45 @@ This is a React 19 + TypeScript + Vite application that displays a searchable/fi
 - Styling: Tailwind CSS with Google DeepMind/Material 3 inspired design
 - Path alias: `@` resolves to project root (configured in vite.config.ts)
 
+### Internationalization (i18n)
+
+The app supports Traditional Chinese (default) and English with automatic browser language detection.
+
+**Key files**:
+- `i18n/types.ts` - Type definitions for translations
+- `i18n/zh-TW.ts` - Traditional Chinese translations
+- `i18n/en.ts` - English translations
+- `i18n/index.ts` - Language detection and utility functions
+- `contexts/LanguageContext.tsx` - React context for language state
+
+**Language detection priority**:
+1. localStorage (`language` key)
+2. Browser language (navigator.language)
+3. Default: `zh-TW`
+
 ### Adding New Prompts
 
-Add to `PROMPTS` array in constants.ts following the `Prompt` interface:
+1. Add to `PROMPTS` array in constants.ts (base data structure)
+2. Add translations to both `i18n/en.ts` and `i18n/zh-TW.ts` in the `prompts` object
+
 ```typescript
+// constants.ts
 {
   id: string,           // e.g., 'strat-10'
-  title: string,
-  category: PromptCategory,  // Use enum value
+  title: string,        // English fallback
+  category: PromptCategory,
   description: string,
-  content: string,      // The actual prompt text (supports backticks for multiline)
+  content: string,
   tags: string[]
+}
+
+// i18n/zh-TW.ts and i18n/en.ts
+prompts: {
+  'strat-10': {
+    title: string,
+    description: string,
+    content: string,
+    tags: string[]
+  }
 }
 ```
