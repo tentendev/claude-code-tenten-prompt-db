@@ -62,6 +62,14 @@ export const zhTW: Translations = {
       zh: '繁體中文',
       en: 'English',
     },
+    sidebar: {
+      tagline: '策略智慧資料庫',
+      strategicPillars: '策略支柱',
+      operationPillars: '營運支柱',
+      darkMode: '深色模式',
+      internal: '僅供內部使用',
+      highImpactPrompts: '個為 Tenten.co 成長精心策劃的高影響力提示詞。',
+    },
   },
   prompts: {
     'strat-01': {

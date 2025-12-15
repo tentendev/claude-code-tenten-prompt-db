@@ -61,6 +61,14 @@ export interface UITranslations {
     zh: string;
     en: string;
   };
+  sidebar?: {
+    tagline: string;
+    strategicPillars: string;
+    operationPillars: string;
+    darkMode: string;
+    internal: string;
+    highImpactPrompts: string;
+  };
 }
 
 export interface PromptTranslation {

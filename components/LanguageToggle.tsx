@@ -1,21 +1,32 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Globe } from 'lucide-react';
 
 const LanguageToggle: React.FC = () => {
-  const { language, toggleLanguage, t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
 
   return (
-    <button
-      onClick={toggleLanguage}
-      className="flex items-center space-x-1.5 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors"
-      title={t.ui.language.toggle}
-    >
-      <Globe size={16} />
-      <span className="hidden sm:inline">
-        {language === 'zh-TW' ? t.ui.language.en : t.ui.language.zh}
-      </span>
-    </button>
+    <div className="flex items-center gap-1 px-1 py-1 bg-slate-800 rounded-lg">
+      <button
+        onClick={() => setLanguage('en')}
+        className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+          language === 'en'
+            ? 'bg-slate-700 text-white'
+            : 'text-slate-400 hover:text-slate-300'
+        }`}
+      >
+        EN
+      </button>
+      <button
+        onClick={() => setLanguage('zh-TW')}
+        className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+          language === 'zh-TW'
+            ? 'bg-slate-700 text-white'
+            : 'text-slate-400 hover:text-slate-300'
+        }`}
+      >
+        中
+      </button>
+    </div>
   );
 };
 

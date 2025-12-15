@@ -62,6 +62,14 @@ export const en: Translations = {
       zh: '繁體中文',
       en: 'English',
     },
+    sidebar: {
+      tagline: 'Strategic Intelligence Library',
+      strategicPillars: 'Strategic Pillars',
+      operationPillars: 'Operation Pillars',
+      darkMode: 'Dark Mode',
+      internal: 'Internal Use Only',
+      highImpactPrompts: 'high-impact prompts curated for Tenten.co growth.',
+    },
   },
   prompts: {
     'strat-01': {
