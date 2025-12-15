@@ -11,13 +11,16 @@ export const zhTW: Translations = {
     },
     hero: {
       badge: 'AI 優先管理系統',
-      titlePart1: '運用',
-      titleHighlight: '生成式智慧',
+      titlePart1: '策略智慧',
+      titleHighlight: '資料庫',
+      subtitle: '運用 RACE 框架取得世界級策略思維。',
       description: '為 Tenten.co CEO 精心策劃的 {count}+ 策略提示詞集合。涵蓋策略、成長、營運和產品創新。',
+      promptsAvailable: '個提示詞可用',
     },
     search: {
-      placeholder: "精確搜尋（例如：'開發信'、'HubSpot'、'策略'）...",
+      placeholder: "搜尋提示詞...",
       popular: '熱門：',
+      results: '個結果',
     },
     categories: {
       all: '所有提示詞',
@@ -37,6 +40,7 @@ export const zhTW: Translations = {
     card: {
       copyPrompt: '複製提示詞',
       copied: '已複製',
+      customize: '自訂',
     },
     modal: {
       context: '背景說明',

@@ -12,11 +12,14 @@ export interface UITranslations {
     badge: string;
     titlePart1: string;
     titleHighlight: string;
+    subtitle: string;
     description: string;
+    promptsAvailable: string;
   };
   search: {
     placeholder: string;
     popular: string;
+    results: string;
   };
   categories: {
     all: string;
@@ -36,6 +39,7 @@ export interface UITranslations {
   card: {
     copyPrompt: string;
     copied: string;
+    customize: string;
   };
   modal: {
     context: string;

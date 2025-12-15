@@ -11,13 +11,16 @@ export const en: Translations = {
     },
     hero: {
       badge: 'AI-First Management System',
-      titlePart1: 'Scale your agency with',
-      titleHighlight: 'Generative Intelligence',
+      titlePart1: 'Strategic Intelligence',
+      titleHighlight: 'Library',
+      subtitle: 'Access world-class strategic thinking powered by the RACE framework.',
       description: 'A curated collection of {count}+ strategic prompts designed for the CEO of Tenten.co. Covering strategy, growth, operations, and product innovation.',
+      promptsAvailable: 'PROMPTS AVAILABLE',
     },
     search: {
-      placeholder: "Search specifically (e.g., 'Cold Email', 'HubSpot', 'Strategy')...",
+      placeholder: "Search prompts...",
       popular: 'Popular:',
+      results: 'results found',
     },
     categories: {
       all: 'All Prompts',
@@ -37,6 +40,7 @@ export const en: Translations = {
     card: {
       copyPrompt: 'Copy Prompt',
       copied: 'Copied',
+      customize: 'Customize',
     },
     modal: {
       context: 'Context',
