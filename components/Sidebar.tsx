@@ -82,11 +82,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Logo Section */}
       <div className="p-6 border-b border-slate-800">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl font-bold text-white">tenten</span>
-          <span className="text-xl font-light text-blue-400">CEO</span>
+          <span className="text-2xl font-bold text-white">Tenten</span>
+          <span className="text-xl font-light text-blue-400">PromptBase</span>
         </div>
         <p className="text-xs text-slate-500 uppercase tracking-wider">
-          {t.ui.sidebar?.tagline || 'Strategic Intelligence Library'}
+          {t.ui.sidebar?.tagline || 'Master the Art of Prompting'}
         </p>
       </div>
 

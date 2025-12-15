@@ -63,7 +63,7 @@ export const en: Translations = {
       en: 'English',
     },
     sidebar: {
-      tagline: 'Strategic Intelligence Library',
+      tagline: 'Master the Art of Prompting',
       strategicPillars: 'Strategic Pillars',
       operationPillars: 'Operation Pillars',
       darkMode: 'Dark Mode',

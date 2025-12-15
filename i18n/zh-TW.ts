@@ -63,7 +63,7 @@ export const zhTW: Translations = {
       en: 'English',
     },
     sidebar: {
-      tagline: '策略智慧資料庫',
+      tagline: '精通提示工程的藝術',
       strategicPillars: '策略支柱',
       operationPillars: '營運支柱',
       darkMode: '深色模式',
