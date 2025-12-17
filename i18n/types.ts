@@ -28,6 +28,24 @@ export interface UITranslations {
     operations: string;
     product: string;
     brand: string;
+    // Consulting Pillars
+    seoGeo: string;
+    socialMedia: string;
+    aiConsulting: string;
+    promptEngineering: string;
+    vcIncubator: string;
+    // Design Pillars
+    webUiUx: string;
+    productDesign: string;
+    contentCreation: string;
+    brandArtDirection: string;
+    videoFilmography: string;
+    // Software Development Pillars
+    webDevelopment: string;
+    shopifyDevelopment: string;
+    devops: string;
+    cloudManagement: string;
+    aiResearch: string;
   };
   pillarDescriptions: {
     strategy: string;
@@ -35,6 +53,24 @@ export interface UITranslations {
     operations: string;
     product: string;
     brand: string;
+    // Consulting Pillars
+    seoGeo: string;
+    socialMedia: string;
+    aiConsulting: string;
+    promptEngineering: string;
+    vcIncubator: string;
+    // Design Pillars
+    webUiUx: string;
+    productDesign: string;
+    contentCreation: string;
+    brandArtDirection: string;
+    videoFilmography: string;
+    // Software Development Pillars
+    webDevelopment: string;
+    shopifyDevelopment: string;
+    devops: string;
+    cloudManagement: string;
+    aiResearch: string;
   };
   card: {
     copyPrompt: string;
@@ -65,6 +101,9 @@ export interface UITranslations {
     tagline: string;
     strategicPillars: string;
     operationPillars: string;
+    consultingPillars: string;
+    designPillars: string;
+    softwareDevPillars: string;
     darkMode: string;
     internal: string;
     highImpactPrompts: string;

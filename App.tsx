@@ -36,11 +36,31 @@ const App: React.FC = () => {
   const getCategoryLabel = (category: PromptCategory | 'All'): string => {
     if (category === 'All') return t.ui.categories.all;
     const categoryMap: Record<PromptCategory, string> = {
+      // Strategic Pillars
       [PromptCategory.STRATEGY]: t.ui.categories.strategy,
       [PromptCategory.GROWTH]: t.ui.categories.growth,
+      [PromptCategory.BRAND]: t.ui.categories.brand,
+      // Operation Pillars
       [PromptCategory.OPERATIONS]: t.ui.categories.operations,
       [PromptCategory.PRODUCT]: t.ui.categories.product,
-      [PromptCategory.BRAND]: t.ui.categories.brand,
+      // Consulting Pillars
+      [PromptCategory.SEO_GEO]: t.ui.categories.seoGeo,
+      [PromptCategory.SOCIAL_MEDIA]: t.ui.categories.socialMedia,
+      [PromptCategory.AI_CONSULTING]: t.ui.categories.aiConsulting,
+      [PromptCategory.PROMPT_ENGINEERING]: t.ui.categories.promptEngineering,
+      [PromptCategory.VC_INCUBATOR]: t.ui.categories.vcIncubator,
+      // Design Pillars
+      [PromptCategory.WEB_UI_UX]: t.ui.categories.webUiUx,
+      [PromptCategory.PRODUCT_DESIGN]: t.ui.categories.productDesign,
+      [PromptCategory.CONTENT_CREATION]: t.ui.categories.contentCreation,
+      [PromptCategory.BRAND_ART_DIRECTION]: t.ui.categories.brandArtDirection,
+      [PromptCategory.VIDEO_FILMOGRAPHY]: t.ui.categories.videoFilmography,
+      // Software Development Pillars
+      [PromptCategory.WEB_DEVELOPMENT]: t.ui.categories.webDevelopment,
+      [PromptCategory.SHOPIFY_DEVELOPMENT]: t.ui.categories.shopifyDevelopment,
+      [PromptCategory.DEVOPS]: t.ui.categories.devops,
+      [PromptCategory.CLOUD_MANAGEMENT]: t.ui.categories.cloudManagement,
+      [PromptCategory.AI_RESEARCH]: t.ui.categories.aiResearch,
     };
     return categoryMap[category] || category;
   };
@@ -51,11 +71,31 @@ const App: React.FC = () => {
       return t.ui.hero.subtitle;
     }
     const descriptionMap: Record<PromptCategory, string> = {
+      // Strategic Pillars
       [PromptCategory.STRATEGY]: t.ui.pillarDescriptions.strategy,
       [PromptCategory.GROWTH]: t.ui.pillarDescriptions.growth,
+      [PromptCategory.BRAND]: t.ui.pillarDescriptions.brand,
+      // Operation Pillars
       [PromptCategory.OPERATIONS]: t.ui.pillarDescriptions.operations,
       [PromptCategory.PRODUCT]: t.ui.pillarDescriptions.product,
-      [PromptCategory.BRAND]: t.ui.pillarDescriptions.brand,
+      // Consulting Pillars
+      [PromptCategory.SEO_GEO]: t.ui.pillarDescriptions.seoGeo,
+      [PromptCategory.SOCIAL_MEDIA]: t.ui.pillarDescriptions.socialMedia,
+      [PromptCategory.AI_CONSULTING]: t.ui.pillarDescriptions.aiConsulting,
+      [PromptCategory.PROMPT_ENGINEERING]: t.ui.pillarDescriptions.promptEngineering,
+      [PromptCategory.VC_INCUBATOR]: t.ui.pillarDescriptions.vcIncubator,
+      // Design Pillars
+      [PromptCategory.WEB_UI_UX]: t.ui.pillarDescriptions.webUiUx,
+      [PromptCategory.PRODUCT_DESIGN]: t.ui.pillarDescriptions.productDesign,
+      [PromptCategory.CONTENT_CREATION]: t.ui.pillarDescriptions.contentCreation,
+      [PromptCategory.BRAND_ART_DIRECTION]: t.ui.pillarDescriptions.brandArtDirection,
+      [PromptCategory.VIDEO_FILMOGRAPHY]: t.ui.pillarDescriptions.videoFilmography,
+      // Software Development Pillars
+      [PromptCategory.WEB_DEVELOPMENT]: t.ui.pillarDescriptions.webDevelopment,
+      [PromptCategory.SHOPIFY_DEVELOPMENT]: t.ui.pillarDescriptions.shopifyDevelopment,
+      [PromptCategory.DEVOPS]: t.ui.pillarDescriptions.devops,
+      [PromptCategory.CLOUD_MANAGEMENT]: t.ui.pillarDescriptions.cloudManagement,
+      [PromptCategory.AI_RESEARCH]: t.ui.pillarDescriptions.aiResearch,
     };
     return descriptionMap[category] || '';
   };
